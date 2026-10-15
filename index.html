@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Französisch 9. Klasse – Schulaufgabe</title>
+<style>
+:root{--fr:#002395;--fr2:#ED2939;--fr3:#FFFFFF;--acc:#f0c040;--bg:#f4f6fa;--card:#fff;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.1);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:#222;}
+header{background:linear-gradient(135deg,var(--fr),#1a3a8f);color:#fff;padding:18px 20px 14px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
+header h1{font-size:1.35rem;font-weight:700;}
+header p{font-size:.82rem;opacity:.85;margin-top:3px;}
+#countdown{display:inline-block;background:var(--fr2);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:600;margin-top:6px;}
+nav{display:flex;gap:6px;overflow-x:auto;background:#fff;padding:8px 12px;border-bottom:2px solid var(--fr);position:sticky;top:72px;z-index:99;}
+nav button{border:none;background:none;padding:7px 13px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;color:#555;white-space:nowrap;transition:.2s;}
+nav button.active{background:var(--fr);color:#fff;}
+.tab{display:none;padding:16px 12px;max-width:960px;margin:0 auto;}
+.tab.active{display:block;}
+h2{color:var(--fr);font-size:1.1rem;margin:18px 0 10px;border-left:4px solid var(--fr2);padding-left:10px;}
+h3{color:#333;font-size:.95rem;margin:14px 0 8px;}
+/* Verb table */
+.vtable-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:.82rem;}
+th{background:var(--fr);color:#fff;padding:9px 8px;text-align:left;}
+td{padding:7px 8px;border-bottom:1px solid #e0e4ef;}
+tr:nth-child(even) td{background:#f0f4ff;}
+tr:hover td{background:#e6ebff;}
+.badge{display:inline-block;border-radius:10px;padding:2px 8px;font-size:.72rem;font-weight:700;}
+.reg{background:#d4edda;color:#155724;}
+.irr{background:#fff3cd;color:#856404;}
+.pro{background:#d1ecf1;color:#0c5460;}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;}
+.filter-row input{padding:7px 12px;border:1px solid #ccd;border-radius:8px;font-size:.85rem;flex:1;min-width:160px;}
+.filter-row select{padding:7px 10px;border:1px solid #ccd;border-radius:8px;font-size:.85rem;}
+/* Rule cards */
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:4px;}
+.rule-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border-top:4px solid var(--fr);}
+.rule-card h3{color:var(--fr);font-size:.95rem;margin-bottom:8px;}
+.rule-card ul{padding-left:16px;font-size:.85rem;line-height:1.65;}
+.rule-card .ex{background:#f0f4ff;border-radius:6px;padding:6px 10px;font-size:.82rem;margin-top:8px;font-style:italic;border-left:3px solid var(--fr2);}
+/* Exercises */
+.ex-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.ex-tabs button{border:2px solid var(--fr);background:#fff;color:var(--fr);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:600;transition:.2s;}
+.ex-tabs button.active{background:var(--fr);color:#fff;}
+.ex-set{display:none;}
+.ex-set.active{display:block;}
+.ex-item{background:var(--card);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+.ex-item p{font-size:.9rem;margin-bottom:8px;line-height:1.6;}
+input.gap{border:none;border-bottom:2px solid var(--fr);background:transparent;font-size:.9rem;padding:2px 4px;width:110px;outline:none;color:var(--fr);}
+input.gap.correct{border-bottom-color:#28a745;color:#28a745;}
+input.gap.wrong{border-bottom-color:#dc3545;color:#dc3545;}
+.ex-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.ex-btns button{padding:6px 14px;border-radius:8px;border:none;cursor:pointer;font-size:.82rem;font-weight:600;}
+.btn-check{background:var(--fr);color:#fff;}
+.btn-sol{background:var(--acc);color:#333;}
+.btn-reset{background:#eee;color:#555;}
+.sol-area{display:none;background:#f0f4ff;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:.85rem;}
+.sol-area.show{display:block;}
+/* Quiz */
+.quiz-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.quiz-cats button{border:2px solid var(--fr2);background:#fff;color:var(--fr2);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:600;transition:.2s;}
+.quiz-cats button.active{background:var(--fr2);color:#fff;}
+.qcard{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);max-width:580px;}
+.qcard .qnum{font-size:.78rem;color:#888;margin-bottom:6px;}
+.qcard .qtext{font-size:.95rem;font-weight:600;margin-bottom:14px;line-height:1.5;}
+.qopts button{display:block;width:100%;text-align:left;padding:9px 14px;margin:5px 0;border:2px solid #dde;border-radius:8px;background:#fff;cursor:pointer;font-size:.88rem;transition:.15s;}
+.qopts button:hover{border-color:var(--fr);background:#eef;}
+.qopts button.correct{background:#d4edda;border-color:#28a745;color:#155724;}
+.qopts button.wrong{background:#f8d7da;border-color:#dc3545;color:#721c24;}
+.qfb{margin-top:10px;font-size:.85rem;font-weight:600;min-height:20px;}
+.qnav{display:flex;gap:10px;margin-top:14px;align-items:center;}
+.qnav button{padding:7px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:.88rem;}
+.btn-next{background:var(--fr);color:#fff;}
+.btn-restart{background:var(--fr2);color:#fff;}
+.progress-bar{height:8px;background:#e0e4ef;border-radius:4px;overflow:hidden;margin-bottom:14px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--fr),var(--fr2));transition:width .4s;}
+.score-box{background:var(--card);border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow);max-width:400px;}
+.score-box .big{font-size:2.8rem;font-weight:700;color:var(--fr);}
+/* Commentaire */
+.struct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:10px 0;}
+.struct-card{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border-top:3px solid var(--acc);}
+.struct-card h4{color:var(--fr);font-size:.9rem;margin-bottom:6px;}
+.struct-card p{font-size:.82rem;line-height:1.55;}
+.expr-list{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;}
+.expr{background:#e8f0ff;border:1px solid #c0ccee;border-radius:6px;padding:4px 10px;font-size:.82rem;color:var(--fr);}
+.model-text{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);font-size:.87rem;line-height:1.7;}
+.model-text .intro{color:#0055aa;}
+.model-text .dev{color:#884400;}
+.model-text .concl{color:#006633;}
+.write-area textarea{width:100%;min-height:120px;border:2px solid var(--fr);border-radius:8px;padding:10px;font-size:.88rem;font-family:inherit;resize:vertical;}
+.wc{font-size:.78rem;color:#888;margin-top:4px;}
+/* Pronominaux */
+.pro-list{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;}
+.pro-verb{background:#d1ecf1;border-radius:8px;padding:5px 12px;font-size:.85rem;color:#0c5460;font-weight:600;}
+</style>
+</head>
+<body>
+<header>
+  <h1>🇫🇷 Französisch – 9. Klasse Gymnasium Bayern</h1>
+  <p>Schulaufgaben-Vorbereitung · Imparfait · Conditionnel · Verbes pronominaux · Commentaire</p>
+  <span id="countdown">⏳ Lade...</span>
+</header>
+<nav>
+  <button class="active" onclick="showTab('verbtab')">📋 Verbtabelle</button>
+  <button onclick="showTab('regeln')">📜 Goldene Regeln</button>
+  <button onclick="showTab('uebungen')">✏️ Übungen</button>
+  <button onclick="showTab('quiz')">🎯 Quiz</button>
+  <button onclick="showTab('commentaire')">📝 Commentaire</button>
+  <button onclick="showTab('pronominaux')">🔄 Pronominaux</button>
+</nav>
+
+<!-- ===== VERBTABELLE ===== -->
+<div id="verbtab" class="tab active">
+  <h2>Verbtabelle – alle Formen</h2>
+  <div class="filter-row">
+    <input type="text" id="vtSearch" placeholder="🔍 Verb suchen..." oninput="filterVerbs()">
+    <select id="vtType" onchange="filterVerbs()">
+      <option value="">Alle Typen</option>
+      <option value="reg">Regelmäßig</option>
+      <option value="irr">Unregelmäßig</option>
+      <option value="pro">Pronominal</option>
+    </select>
+  </div>
+  <div class="vtable-wrap">
+  <table id="vtable">
+    <thead><tr>
+      <th>Infinitif</th><th>Présent (je)</th><th>Imparfait (je)</th>
+      <th>Passé composé</th><th>Futur simple</th><th>Conditionnel</th><th>Übersetzung</th><th>Typ</th>
+    </tr></thead>
+    <tbody id="vtbody"></tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ===== GOLDENE REGELN ===== -->
+<div id="regeln" class="tab">
+  <h2>Die Goldenen Regeln der Konjugation</h2>
+  <div class="rule-grid" id="ruleGrid"></div>
+</div>
+
+<!-- ===== ÜBUNGEN ===== -->
+<div id="uebungen" class="tab">
+  <h2>Übungsaufgaben</h2>
+  <div class="ex-tabs">
+    <button class="active" onclick="showEx('ex_pres')">Présent</button>
+    <button onclick="showEx('ex_impa')">Imparfait</button>
+    <button onclick="showEx('ex_pc')">Passé composé</button>
+    <button onclick="showEx('ex_cond')">Conditionnel</button>
+    <button onclick="showEx('ex_neg')">Négation</button>
+    <button onclick="showEx('ex_pro')">Pronominaux</button>
+    <button onclick="showEx('ex_taches')">Tâches ménagères</button>
+    <button onclick="showEx('ex_mix')">Mix</button>
+  </div>
+  <div id="ex_pres" class="ex-set active"></div>
+  <div id="ex_impa" class="ex-set"></div>
+  <div id="ex_pc" class="ex-set"></div>
+  <div id="ex_cond" class="ex-set"></div>
+  <div id="ex_neg" class="ex-set"></div>
+  <div id="ex_pro" class="ex-set"></div>
+  <div id="ex_taches" class="ex-set"></div>
+  <div id="ex_mix" class="ex-set"></div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="quiz" class="tab">
+  <h2>Quiz – Teste dein Wissen!</h2>
+  <div class="quiz-cats">
+    <button class="active" onclick="startQuiz('all')">Alle</button>
+    <button onclick="startQuiz('conj')">Konjugation</button>
+    <button onclick="startQuiz('impa')">Imparfait</button>
+    <button onclick="startQuiz('cond')">Conditionnel</button>
+    <button onclick="startQuiz('neg')">Négation</button>
+    <button onclick="startQuiz('pro')">Pronominaux</button>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="qprogress"></div></div>
+  <div id="qarea"></div>
+</div>
+
+<!-- ===== COMMENTAIRE ===== -->
+<div id="commentaire" class="tab">
+  <h2>Le Commentaire – Schreiben</h2>
+  <h3>Struktur eines Commentaire</h3>
+  <div class="struct-grid">
+    <div class="struct-card"><h4>1. Introduction</h4><p>Thema vorstellen, These aufstellen, Leser ansprechen.</p></div>
+    <div class="struct-card"><h4>2. Développement</h4><p>2–3 Argumente mit Beispielen, Pro/Contra, Belege aus Text.</p></div>
+    <div class="struct-card"><h4>3. Conclusion</h4><p>Zusammenfassung, persönliche Meinung, Ausblick / Appell.</p></div>
+  </div>
+
+  <h3>Expressions utiles – Nützliche Ausdrücke</h3>
+  <h3 style="font-size:.82rem;color:#666;margin-bottom:4px;">Einleitung</h3>
+  <div class="expr-list">
+    <span class="expr">Il s'agit de...</span><span class="expr">Le texte traite de...</span>
+    <span class="expr">À mon avis...</span><span class="expr">Je pense que...</span>
+    <span class="expr">Le sujet principal est...</span>
+  </div>
+  <h3 style="font-size:.82rem;color:#666;margin-bottom:4px;">Argumentation</h3>
+  <div class="expr-list">
+    <span class="expr">D'un côté... de l'autre côté...</span><span class="expr">En effet,...</span>
+    <span class="expr">Par exemple,...</span><span class="expr">C'est pourquoi...</span>
+    <span class="expr">De plus,...</span><span class="expr">Cependant,...</span>
+    <span class="expr">Il faut également...</span><span class="expr">En revanche,...</span>
+  </div>
+  <h3 style="font-size:.82rem;color:#666;margin-bottom:4px;">Schluss</h3>
+  <div class="expr-list">
+    <span class="expr">En conclusion,...</span><span class="expr">Pour conclure,...</span>
+    <span class="expr">En résumé,...</span><span class="expr">Finalement,...</span>
+    <span class="expr">Il est important de...</span>
+  </div>
+
+  <h3>Mustertext (farbig markiert)</h3>
+  <div class="model-text">
+    <span class="intro"><b>[Introduction]</b> De nos jours, les réseaux sociaux jouent un rôle énorme dans la vie des jeunes. À mon avis, ils ont des avantages, mais aussi des inconvénients.</span><br><br>
+    <span class="dev"><b>[Développement]</b> D'un côté, les réseaux sociaux permettent de rester en contact avec des amis et d'échanger des informations. De plus, ils peuvent aider les jeunes à s'exprimer. Par exemple, beaucoup de jeunes partagent leurs talents artistiques en ligne. Cependant, d'un autre côté, les réseaux sociaux peuvent être dangereux. En effet, les fausses informations se répandent rapidement. Il faut également mentionner le risque pour la vie privée.</span><br><br>
+    <span class="concl"><b>[Conclusion]</b> En conclusion, les réseaux sociaux sont utiles si on les utilise de façon responsable. Il est important d'apprendre aux jeunes à utiliser internet de manière critique et sûre.</span>
+  </div>
+  <p style="font-size:.78rem;color:#888;margin-top:6px;">🔵 Blau = Introduction &nbsp; 🟠 Orange = Développement &nbsp; 🟢 Grün = Conclusion</p>
+
+  <h3>Schreib deinen eigenen Commentaire</h3>
+  <p style="font-size:.85rem;margin-bottom:8px;"><b>Thema:</b> <i>Les jeunes et les réseaux sociaux – Fluch oder Segen?</i> (min. 80 Wörter)</p>
+  <div class="write-area">
+    <textarea id="myComm" placeholder="Schreibe hier deinen Commentaire auf Französisch..." oninput="countWords()"></textarea>
+    <div class="wc" id="wcDisplay">Wörter: 0 / 80</div>
+  </div>
+</div>
+
+<!-- ===== PRONOMINAUX ===== -->
+<div id="pronominaux" class="tab">
+  <h2>Verbes pronominaux – Reflexive Verben</h2>
+
+  <div class="rule-card" style="margin-bottom:14px;">
+    <h3>⚙️ Bildung im Présent</h3>
+    <ul>
+      <li>me / m' – für je</li>
+      <li>te / t' – für tu</li>
+      <li>se / s' – für il/elle/on</li>
+      <li>nous – für nous</li>
+      <li>vous – für vous</li>
+      <li>se / s' – für ils/elles</li>
+    </ul>
+    <div class="ex">Je <b>me</b> lève. &nbsp; Tu <b>te</b> lèves. &nbsp; Il <b>se</b> lève.<br>
+    Nous <b>nous</b> levons. &nbsp; Vous <b>vous</b> levez. &nbsp; Ils <b>se</b> lèvent.</div>
+  </div>
+
+  <div class="rule-card" style="margin-bottom:14px;">
+    <h3>📌 Passé composé mit ÊTRE</h3>
+    <ul>
+      <li>Immer mit <b>être</b> (nie avoir!)</li>
+      <li>Partizip passt sich dem Subjekt an</li>
+      <li>Verneinung: <b>ne ... pas</b> um être</li>
+    </ul>
+    <div class="ex">Elle <b>s'est levée</b>. &nbsp; Ils <b>se sont levés</b>.<br>
+    Il <b>ne s'est pas levé</b>.</div>
+  </div>
+
+  <div class="rule-card" style="margin-bottom:14px;">
+    <h3>🔄 Réciproques (gegenseitig)</h3>
+    <ul>
+      <li>Nur Plural: nous, vous, ils/elles</li>
+      <li>Bedeutung: einander / sich gegenseitig</li>
+    </ul>
+    <div class="ex">Ils <b>se voient</b> souvent. (Sie sehen sich oft.)<br>
+    Nous <b>nous téléphonons</b> chaque jour.</div>
+  </div>
+
+  <h3>Wichtige Verbes pronominaux</h3>
+  <div class="pro-list">
+    <span class="pro-verb">se lever</span><span class="pro-verb">se coucher</span>
+    <span class="pro-verb">se laver</span><span class="pro-verb">se brosser</span>
+    <span class="pro-verb">s'habiller</span><span class="pro-verb">se déshabiller</span>
+    <span class="pro-verb">se réveiller</span><span class="pro-verb">se souvenir</span>
+    <span class="pro-verb">s'appeler</span><span class="pro-verb">se sentir</span>
+    <span class="pro-verb">s'occuper</span><span class="pro-verb">se dépêcher</span>
+    <span class="pro-verb">se retrouver</span><span class="pro-verb">se promener</span>
+    <span class="pro-verb">s'ennuyer</span><span class="pro-verb">se fâcher</span>
+    <span class="pro-verb">se taire</span><span class="pro-verb">se disputer</span>
+  </div>
+
+  <h3>Übungen Pronominaux</h3>
+  <div id="pro_ex_area"></div>
+</div>
+
+<script>
+// ===== COUNTDOWN =====
+(function(){
+  const exam=new Date('2026-07-03');
+  const now=new Date();
+  const d=Math.ceil((exam-now)/(86400000));
+  const el=document.getElementById('countdown');
+  if(d>0) el.textContent='⏳ Noch '+d+' Tag'+(d===1?'':'e')+ ' bis zur Schulaufgabe';
+  else if(d===0) el.textContent='🎯 Heute ist die Schulaufgabe!';
+  else el.textContent='✅ Schulaufgabe war vor '+(-d)+' Tagen';
+})();
+
+// ===== TAB SWITCHING =====
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx=['verbtab','regeln','uebungen','quiz','commentaire','pronominaux'].indexOf(id);
+  document.querySelectorAll('nav button')[idx].classList.add('active');
+  if(id==='uebungen' && !exBuilt){buildExercises();exBuilt=true;}
+  if(id==='quiz' && !quizBuilt){buildQuiz();quizBuilt=true;startQuiz('all');}
+  if(id==='pronominaux' && !proBuilt){buildProEx();proBuilt=true;}
+}
+
+// ===== VERB DATA =====
+const verbs=[
+  // Infinitif, Présent(je), Imparfait(je), Passé composé, Futur, Conditionnel, DE, type
+  ['être','suis','étais','ai été','serai','serais','sein','irr'],
+  ['avoir','ai','avais','ai eu','aurai','aurais','haben','irr'],
+  ['aller','vais','allais','suis allé(e)','irai','irais','gehen','irr'],
+  ['faire','fais','faisais','ai fait','ferai','ferais','machen','irr'],
+  ['prendre','prends','prenais','ai pris','prendrai','prendrais','nehmen','irr'],
+  ['pouvoir','peux','pouvais','ai pu','pourrai','pourrais','können','irr'],
+  ['vouloir','veux','voulais','ai voulu','voudrai','voudrais','wollen','irr'],
+  ['savoir','sais','savais','ai su','saurai','saurais','wissen','irr'],
+  ['venir','viens','venais','suis venu(e)','viendrai','viendrais','kommen','irr'],
+  ['voir','vois','voyais','ai vu','verrai','verrais','sehen','irr'],
+  ['devoir','dois','devais','ai dû','devrai','devrais','müssen','irr'],
+  ['lire','lis','lisais','ai lu','lirai','lirais','lesen','irr'],
+  ['écrire','écris','écrivais','ai écrit','écrirai','écrirais','schreiben','irr'],
+  ['dire','dis','disais','ai dit','dirai','dirais','sagen','irr'],
+  ['mettre','mets','mettais','ai mis','mettrai','mettrais','setzen/stellen','irr'],
+  ['connaître','connais','connaissais','ai connu','connaîtrai','connaîtrais','kennen','irr'],
+  ['partir','pars','partais','suis parti(e)','partirai','partirais','abfahren','irr'],
+  ['sortir','sors','sortais','suis sorti(e)','sortirai','sortirais','ausgehen','irr'],
+  ['finir','finis','finissais','ai fini','finirai','finirais','beenden','reg'],
+  ['choisir','choisis','choisissais','ai choisi','choisirai','choisirais','wählen','reg'],
+  ['aimer','aime','aimais','ai aimé','aimerai','aimerais','lieben/mögen','reg'],
+  ['habiter','habite','habitais','ai habité','habiterai','habiterais','wohnen','reg'],
+  ['parler','parle','parlais','ai parlé','parlerai','parlerais','sprechen','reg'],
+  ['manger','mange','mangeais','ai mangé','mangerai','mangerais','essen','reg'],
+  ['jouer','joue','jouais','ai joué','jouerai','jouerais','spielen','reg'],
+  ['travailler','travaille','travaillais','ai travaillé','travaillerai','travaillerais','arbeiten','reg'],
+  ['voyager','voyage','voyageais','ai voyagé','voyagerai','voyagerais','reisen','reg'],
+  ['rendre','rends','rendais','ai rendu','rendrai','rendrais','zurückgeben','reg'],
+  ['attendre','attends','attendais','ai attendu','attendrai','attendrais','warten','reg'],
+  ['répondre','réponds','répondais','ai répondu','répondrai','répondrais','antworten','reg'],
+  ['se lever','me lève','me levais','me suis levé(e)','me lèverai','me lèverais','aufstehen','pro'],
+  ['se coucher','me couche','me couchais','me suis couché(e)','me coucherai','me coucherais','schlafen gehen','pro'],
+  ['s\'appeler','m\'appelle','m\'appelais','me suis appelé(e)','m\'appellerai','m\'appellerais','heißen','pro'],
+  ['se souvenir','me souviens','me souvenais','me suis souvenu(e)','me souviendrai','me souviendrais','sich erinnern','pro'],
+  ['s\'occuper','m\'occupe','m\'occupais','me suis occupé(e)','m\'occuperai','m\'occuperais','sich kümmern','pro'],
+];
+
+// Build verb table
+function buildVerbTable(data){
+  const tb=document.getElementById('vtbody');
+  tb.innerHTML='';
+  data.forEach(v=>{
+    const tr=document.createElement('tr');
+    const typeLabel={reg:'Regelmäßig',irr:'Unregelmäßig',pro:'Pronominal'}[v[7]];
+    tr.innerHTML=`<td><b>${v[0]}</b></td><td>${v[1]}</td><td>${v[2]}</td><td>${v[3]}</td><td>${v[4]}</td><td>${v[5]}</td><td>${v[6]}</td><td><span class="badge ${v[7]}">${typeLabel}</span></td>`;
+    tb.appendChild(tr);
+  });
+}
+buildVerbTable(verbs);
+
+function filterVerbs(){
+  const q=document.getElementById('vtSearch').value.toLowerCase();
+  const t=document.getElementById('vtType').value;
+  const filtered=verbs.filter(v=>{
+    const matchQ=!q||v[0].toLowerCase().includes(q)||v[6].toLowerCase().includes(q);
+    const matchT=!t||v[7]===t;
+    return matchQ&&matchT;
+  });
+  buildVerbTable(filtered);
+}
+
+// ===== GOLDEN RULES =====
+const rules=[
+  {t:'Présent – ER Verben',b:['Stamm = Infinitiv – ER','Endungen: -e, -es, -e, -ons, -ez, -ent'],ex:'parler → parl + e/es/e/ons/ez/ent'},
+  {t:'Présent – IR Verben',b:['Stamm = Infinitiv – IR','Endungen: -is, -is, -it, -issons, -issez, -issent'],ex:'finir → fin + is/is/it/issons/issez/issent'},
+  {t:'Imparfait – Die Mega-Regel',b:['Stamm = nous-Form Présent – ons','Endungen: -ais, -ais, -ait, -ions, -iez, -aient','Ausnahme: être → ét- (étais, étais...)'],ex:'nous parlons → parl → parlais, parlait...'},
+  {t:'Passé composé – 3 Schritte',b:['1. avoir ODER être (VANDERTRAMPP!)','2. Partizip Perfekt (parlé, fini, fait...)','3. Bei être: Partizip an Subjekt anpassen'],ex:'Elle est allée. / Ils ont mangé.'},
+  {t:'VANDERTRAMPP + être',b:['Venir, Aller, Naître, Décéder','Entrer, Rester, Tomber, Retourner','Arriver, Monter, Partir/Passer, Partir'],ex:'Je suis allé(e). Tu es venu(e).'},
+  {t:'Futur simple',b:['Stamm = Infinitiv (bei ER: ganz)','Endungen: -ai, -as, -a, -ons, -ez, -ont','Achtung Unregelmäßige: aller→ir-, avoir→aur-'],ex:'parler → parlerai, parler as, parlera...'},
+  {t:'Conditionnel',b:['Stamm = Futur-Stamm','Endungen = Imparfait-Endungen (-ais, -ais, -ait, -ions, -iez, -aient)'],ex:'Si j\'avais le temps, je voyagerais.'},
+  {t:'Si-Sätze Typ II',b:['Si + Imparfait → Conditionnel','= irreale Bedingung (Wunsch/Fantasie)'],ex:'Si j\'étais riche, j\'achèterais une maison.'},
+  {t:'Négation',b:['ne ... pas (nicht)','ne ... jamais (nie)','ne ... plus (nicht mehr)','ne ... rien (nichts)','ne ... personne (niemand)'],ex:'Je ne mange pas. Il ne vient jamais.'},
+  {t:'Verneinung im Passé composé',b:['ne steht vor avoir/être','pas steht nach avoir/être','Partizip kommt ganz am Ende'],ex:'Il n\'a pas mangé. Elle n\'est pas venue.'},
+];
+
+(function(){
+  const g=document.getElementById('ruleGrid');
+  rules.forEach(r=>{
+    const d=document.createElement('div');d.className='rule-card';
+    d.innerHTML=`<h3>${r.t}</h3><ul>${r.b.map(x=>`<li>${x}</li>`).join('')}</ul><div class="ex">${r.ex}</div>`;
+    g.appendChild(d);
+  });
+})();
+
+// ===== EXERCISES =====
+const exData={
+  ex_pres:[
+    {q:'Conjugue <b>être</b> – Je ______.',a:'suis',hint:'je → suis'},
+    {q:'Conjugue <b>avoir</b> – Nous ______.',a:'avons',hint:'nous → avons'},
+    {q:'Conjugue <b>faire</b> – Il ______.',a:'fait',hint:'il → fait'},
+    {q:'Conjugue <b>prendre</b> – Tu ______.',a:'prends',hint:'tu → prends'},
+    {q:'Conjugue <b>aimer</b> – Elle ______.',a:'aime',hint:'-ER: stamm + e'},
+    {q:'Conjugue <b>finir</b> – Vous ______.',a:'finissez',hint:'-IR: finiss + ez'},
+    {q:'Conjugue <b>pouvoir</b> – Ils ______.',a:'peuvent',hint:'ils → peuvent'},
+    {q:'Conjugue <b>savoir</b> – Je ______.',a:'sais',hint:'je → sais'},
+    {q:'Conjugue <b>vouloir</b> – Tu ______.',a:'veux',hint:'tu → veux'},
+    {q:'Conjugue <b>lire</b> – Nous ______.',a:'lisons',hint:'nous → lisons'},
+    {q:'Conjugue <b>manger</b> – Je ______.',a:'mange',hint:'-ER: stamm + e'},
+    {q:'Conjugue <b>aller</b> – Vous ______.',a:'allez',hint:'vous → allez'},
+  ],
+  ex_impa:[
+    {q:'Imparfait: <b>habiter</b> – J\'______.',a:'habitais',hint:'nous habitons → habit + ais'},
+    {q:'Imparfait: <b>jouer</b> – Tu ______.',a:'jouais',hint:'nous jouons → jou + ais'},
+    {q:'Imparfait: <b>finir</b> – Elle ______.',a:'finissait',hint:'nous finissons → finiss + ait'},
+    {q:'Imparfait: <b>rendre</b> – Nous ______.',a:'rendions',hint:'nous rendons → rend + ions'},
+    {q:'Imparfait: <b>aller</b> – Ils ______.',a:'allaient',hint:'nous allons → all + aient'},
+    {q:'Imparfait: <b>voyager</b> – Je ______.',a:'voyageais',hint:'nous voyageons → voyage + ais'},
+    {q:'Imparfait: <b>connaître</b> – Tu ______.',a:'connaissais',hint:'nous connaissons → connaiss + ais'},
+    {q:'Imparfait: <b>prendre</b> – Il ______.',a:'prenait',hint:'nous prenons → pren + ait'},
+    {q:'Imparfait: <b>lire</b> – Vous ______.',a:'lisiez',hint:'nous lisons → lis + iez'},
+    {q:'Imparfait: <b>avoir</b> – J\'______.',a:'avais',hint:'nous avons → av + ais'},
+    {q:'Imparfait: <b>être</b> – Il ______.',a:'était',hint:'Ausnahme: ét + ait'},
+    {q:'Imparfait: <b>faire</b> – Nous ______.',a:'faisions',hint:'nous faisons → fais + ions'},
+  ],
+  ex_pc:[
+    {q:'Passé composé: <b>manger</b> – J\'______ ______.',a:'ai mangé',hint:'avoir + mangé'},
+    {q:'Passé composé: <b>aller</b> – Elle ______ ______.',a:'est allée',hint:'être + allé(e)'},
+    {q:'Passé composé: <b>venir</b> – Ils ______ ______.',a:'sont venus',hint:'être + venus'},
+    {q:'Passé composé: <b>faire</b> – Tu ______ ______.',a:'as fait',hint:'avoir + fait'},
+    {q:'Passé composé: <b>prendre</b> – Nous ______ ______.',a:'avons pris',hint:'avoir + pris'},
+    {q:'Passé composé: <b>partir</b> – Il ______ ______.',a:'est parti',hint:'VANDERTRAMPP → être'},
+    {q:'Passé composé: <b>écrire</b> – J\'______ ______.',a:'ai écrit',hint:'avoir + écrit'},
+    {q:'Passé composé: <b>voir</b> – Elle ______ ______.',a:'a vu',hint:'avoir + vu'},
+    {q:'Passé composé: <b>arriver</b> – Vous ______ ______.',a:'êtes arrivé(e)s',hint:'VANDERTRAMPP → être'},
+    {q:'Passé composé: <b>lire</b> – Il ______ ______.',a:'a lu',hint:'avoir + lu'},
+    {q:'Passé composé: <b>se lever</b> – Je ______ ______ ______.',a:'me suis levé(e)',hint:'être + levé(e)'},
+    {q:'Passé composé (neg): <b>manger</b> – Il ______ pas ______.',a:'n\'a pas mangé',hint:'ne...pas um avoir'},
+  ],
+  ex_cond:[
+    {q:'Conditionnel: Si j\'avais le temps, je ______ (voyager).',a:'voyagerais',hint:'voyager → voyage + rais'},
+    {q:'Conditionnel: Si elle était riche, elle ______ (acheter) une maison.',a:'achèterait',hint:'acheter → achèt + rait'},
+    {q:'Conditionnel: Si tu savais, tu ______ (réagir) autrement.',a:'réagirais',hint:'réagir → réagi + rais'},
+    {q:'Conditionnel: Si nous pouvions, nous ______ (s\'occuper) de tout.',a:'nous occuperions',hint:'s\'occuper → occupe + rions'},
+    {q:'Conditionnel: Si j\'étais toi, j\'______ (avoir) plus de patience.',a:'aurais',hint:'avoir → aur + ais'},
+    {q:'Conditionnel: Il ______ (faire) beau si on avait de la chance.',a:'ferait',hint:'faire → fer + ait'},
+    {q:'Conditionnel: Vous ______ (pouvoir) venir si vous vouliez.',a:'pourriez',hint:'pouvoir → pourr + iez'},
+    {q:'Conditionnel: Ils ______ (savoir) la réponse si ils étudiaient.',a:'sauraient',hint:'savoir → saur + aient'},
+  ],
+  ex_neg:[
+    {q:'Mettre à la forme négative: <i>Je mange du pain.</i>',a:'Je ne mange pas de pain.',hint:'ne...pas + de nach Verneinung'},
+    {q:'Mettre à la forme négative: <i>Elle vient toujours.</i>',a:'Elle ne vient jamais.',hint:'toujours → jamais'},
+    {q:'Mettre à la forme négative: <i>Il parle encore allemand.</i>',a:'Il ne parle plus allemand.',hint:'encore → ne...plus'},
+    {q:'Mettre à la forme négative: <i>Nous avons mangé quelque chose.</i>',a:'Nous n\'avons rien mangé.',hint:'rien kommt nach avoir'},
+    {q:'Mettre à la forme négative: <i>Tu vois quelqu\'un là-bas?</i>',a:'Tu ne vois personne là-bas?',hint:'personne kommt nach Verb'},
+    {q:'Passé composé négatif: <i>Il a lu le livre.</i>',a:'Il n\'a pas lu le livre.',hint:'ne...pas um a'},
+    {q:'Passé composé négatif: <i>Elle est allée au cinéma.</i>',a:'Elle n\'est pas allée au cinéma.',hint:'ne...pas um est'},
+    {q:'Passé composé négatif: <i>Ils ont vu le film.</i>',a:'Ils n\'ont rien vu.',hint:'rien nach ont'},
+  ],
+  ex_pro:[
+    {q:'Conjugue au présent: <b>se lever</b> – Je ______.',a:'me lève',hint:'me + lève'},
+    {q:'Conjugue au présent: <b>s\'appeler</b> – Tu ______.',a:'t\'appelles',hint:'te → t\' vor Vokal'},
+    {q:'Conjugue au présent: <b>se coucher</b> – Nous ______.',a:'nous couchons',hint:'nous nous couchons'},
+    {q:'Mettre au pluriel: <i>Je me lave.</i> → Nous ______.',a:'nous lavons',hint:'nous nous lavons'},
+    {q:'Mettre au pluriel: <i>Tu te réveilles.</i> → Vous ______.',a:'vous réveillez',hint:'vous vous réveillez'},
+    {q:'Passé composé: <b>se lever</b> – Elle ______.',a:'s\'est levée',hint:'être + levée (f.)'},
+    {q:'Passé composé: <b>se souvenir</b> – Ils ______.',a:'se sont souvenus',hint:'être + souvenus'},
+    {q:'Réciproque: Ils ______ (se voir) souvent.',a:'se voient',hint:'se + voient'},
+    {q:'Mettre à la forme négative: <i>Il se lève.</i>',a:'Il ne se lève pas.',hint:'ne vor se, pas nach Verb'},
+    {q:'Mettre à la forme négative (PC): <i>Elle s\'est lavée.</i>',a:'Elle ne s\'est pas lavée.',hint:'ne...pas um s\'est'},
+  ],
+  ex_taches:[
+    {q:'Traduis: <i>Ich wasche das Geschirr.</i>',a:'Je fais la vaisselle.',hint:'faire la vaisselle'},
+    {q:'Traduis: <i>Ich sauge Staub.</i>',a:'Je passe l\'aspirateur.',hint:'passer l\'aspirateur'},
+    {q:'Traduis: <i>Ich mache das Bett.</i>',a:'Je fais le lit.',hint:'faire le lit'},
+    {q:'Traduis: <i>Ich räume auf.</i>',a:'Je range ma chambre.',hint:'ranger'},
+    {q:'Traduis: <i>Ich nehme den Müll raus.</i>',a:'Je sors les poubelles.',hint:'sortir les poubelles'},
+    {q:'Traduis: <i>Ich wische den Boden.</i>',a:'Je lave le sol.',hint:'laver le sol'},
+    {q:'Traduis: <i>Ich hänge die Wäsche auf.</i>',a:'J\'étends le linge.',hint:'étendre le linge'},
+    {q:'Traduis: <i>Ich kaufe ein.</i>',a:'Je fais les courses.',hint:'faire les courses'},
+    {q:'Traduis: <i>Ich koche das Abendessen.</i>',a:'Je fais la cuisine.',hint:'faire la cuisine'},
+    {q:'Traduis: <i>Ich putze das Badezimmer.</i>',a:'Je nettoie la salle de bain.',hint:'nettoyer'},
+  ],
+  ex_mix:[
+    {q:'Imparfait ou Passé composé? <i>Chaque matin, il ______ (se lever) à 7h.</i>',a:'se levait',hint:'Gewohnheit → Imparfait'},
+    {q:'Imparfait ou Passé composé? <i>Hier, elle ______ (voir) un film.</i>',a:'a vu',hint:'einmalige Handlung → PC'},
+    {q:'Imparfait ou Passé composé? <i>Quand j\'étais petit, je ______ (jouer) au foot.</i>',a:'jouais',hint:'regelmäßige Handlung → Imparfait'},
+    {q:'Conditionnel: <i>Si tu venais, nous ______ (être) contents.</i>',a:'serions',hint:'être → ser + ions'},
+    {q:'Négatif PC: <i>Nous ______ pas ______ (manger).</i>',a:'n\'avons pas mangé',hint:'ne...pas um avons'},
+    {q:'Réciproque: <i>Ils ______ (se téléphoner) hier soir.</i>',a:'se sont téléphoné',hint:'PC réciproque → être'},
+  ],
+};
+
+let exBuilt=false;
+function buildExercises(){
+  Object.keys(exData).forEach(setId=>{
+    const container=document.getElementById(setId);
+    if(!container){return;}
+    exData[setId].forEach((item,i)=>{
+      const div=document.createElement('div');div.className='ex-item';
+      div.innerHTML=`<p>${i+1}. ${item.q}<br><input class="gap" type="text" placeholder="..." data-ans="${item.a}" id="${setId}_g${i}"></p>
+      <div class="ex-btns">
+        <button class="btn-check" onclick="checkOne('${setId}_g${i}')">✔ Prüfen</button>
+        <button class="btn-sol" onclick="showOneSol('sol_${setId}_${i}','${item.a}','${item.hint}')">💡 Lösung</button>
+        <button class="btn-reset" onclick="resetOne('${setId}_g${i}','sol_${setId}_${i}')">↺ Reset</button>
+      </div>
+      <div class="sol-area" id="sol_${setId}_${i}"></div>`;
+      container.appendChild(div);
+    });
+  });
+}
+function showEx(id){
+  document.querySelectorAll('.ex-set').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.ex-tabs button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const sets=['ex_pres','ex_impa','ex_pc','ex_cond','ex_neg','ex_pro','ex_taches','ex_mix'];
+  const idx=sets.indexOf(id);
+  document.querySelectorAll('.ex-tabs button')[idx].classList.add('active');
+}
+function checkOne(gid){
+  const inp=document.getElementById(gid);
+  const ans=inp.dataset.ans.toLowerCase().replace(/[éè]/g,'e').replace(/[àâ]/g,'a');
+  const val=inp.value.toLowerCase().trim().replace(/[éè]/g,'e').replace(/[àâ]/g,'a');
+  if(val===ans||val===inp.dataset.ans.toLowerCase().trim()){
+    inp.classList.remove('wrong');inp.classList.add('correct');
+  } else {
+    inp.classList.remove('correct');inp.classList.add('wrong');
+  }
+}
+function showOneSol(solId,ans,hint){
+  const s=document.getElementById(solId);
+  s.classList.add('show');
+  s.innerHTML=`<b>✅ Lösung:</b> ${ans}<br><i>💡 Tipp: ${hint}</i>`;
+}
+function resetOne(gid,solId){
+  const inp=document.getElementById(gid);
+  inp.value='';inp.classList.remove('correct','wrong');
+  const s=document.getElementById(solId);
+  s.classList.remove('show');s.innerHTML='';
+}
+
+// ===== QUIZ =====
+const quizData=[
+  {cat:'conj',q:'Quelle est la forme correcte de "parler" à la 1ère personne du singulier?',opts:['parle','parles','parlent','parlerai'],a:0},
+  {cat:'conj',q:'Comment conjugue-t-on "finir" à la 3ème personne du pluriel au présent?',opts:['finissent','finissons','finirent','finissez'],a:0},
+  {cat:'conj',q:'Quelle est la forme de "avoir" à "nous"?',opts:['avons','avez','ont','avions'],a:0},
+  {cat:'conj',q:'Conjugue "faire" à "vous" au présent:',opts:['faites','faisez','font','fassiez'],a:0},
+  {cat:'conj',q:'Comment dit-on "ich weiß" en français?',opts:['Je sais','Je connais','Je peux','Je veux'],a:0},
+  {cat:'conj',q:'Quelle est la bonne conjugaison de "aller" à "tu"?',opts:['vas','alles','vais','allons'],a:0},
+  {cat:'conj',q:'"Nous voulons" – quelle est la forme à "ils"?',opts:['veulent','voulons','voulez','voulaient'],a:0},
+  {cat:'impa',q:'Quelle est la règle pour former l\'imparfait?',opts:['nous-forme – ons + endings','infinitif + endings','passé composé – é','futur – ai + endings'],a:0},
+  {cat:'impa',q:'Quelle est l\'imparfait de "être" à "je"?',opts:['étais','avais','suis','serai'],a:0},
+  {cat:'impa',q:'Comment forme-t-on l\'imparfait de "vouloir" à "il"?',opts:['voulait','voulais','voulut','voudrait'],a:0},
+  {cat:'impa',q:'L\'imparfait s\'utilise pour...',opts:['Gewohnheiten in der Vergangenheit','Einmalige Ereignisse','Zukünftige Pläne','Befehle'],a:0},
+  {cat:'impa',q:'Quelle forme est correcte pour "jouer" à "nous" à l\'imparfait?',opts:['jouions','jouais','jouaient','jouerons'],a:0},
+  {cat:'neg',q:'Comment dit-on "ich esse nie" en français?',opts:['Je ne mange jamais','Je mange pas','Je n\'mange pas jamais','Je ne jamais mange'],a:0},
+  {cat:'neg',q:'Quelle est la négation de "Il a mangé du pain"?',opts:['Il n\'a pas mangé de pain','Il pas mangé du pain','Il a ne mangé pas pain','Il ne mangé pas le pain'],a:0},
+  {cat:'neg',q:'Mettre à la forme négative: "Elle vient encore."',opts:['Elle ne vient plus.','Elle ne vient pas.','Elle ne vient jamais.','Elle ne vient rien.'],a:0},
+  {cat:'neg',q:'"Nous ne voyons ______ là-bas."',opts:['personne','rien','jamais','plus'],a:0},
+  {cat:'neg',q:'Dans quel ordre se place la négation au passé composé?',opts:['ne + avoir/être + pas + participe','ne + pas + avoir/être + participe','avoir/être + ne + pas + participe','ne + participe + pas + avoir'],a:0},
+  {cat:'cond',q:'Comment forme-t-on le conditionnel?',opts:['Futur-Stamm + Imparfait-Endungen','Infinitif + Présent-Endungen','nous-forme + ais','Imparfait-Stamm + Futur-Endungen'],a:0},
+  {cat:'cond',q:'Quelle est la phrase avec le conditionnel correcte?',opts:['Si j\'avais le temps, je voyagerais.','Si j\'ai le temps, je voyagerais.','Si j\'avais le temps, je voyagerai.','Si j\'avais le temps, j\'ai voyagé.'],a:0},
+  {cat:'cond',q:'Le conditionnel de "avoir" à "je" est:',opts:['aurais','avais','aurai','ai'],a:0},
+  {cat:'cond',q:'"Si elle était riche, elle ______ une maison."',opts:['achèterait','achète','achètera','achetait'],a:0},
+  {cat:'cond',q:'Le conditionnel exprime...',opts:['Wunsch/irreale Bedingung','vergangene Gewohnheit','einmalige Vergangenheit','Zukunft'],a:0},
+  {cat:'pro',q:'Quelle est la bonne forme de "se lever" à "je"?',opts:['me lève','te lève','se lève','je lève'],a:0},
+  {cat:'pro',q:'Au passé composé, les verbes pronominaux se conjuguent avec...',opts:['être','avoir','avoir ou être','ni avoir ni être'],a:0},
+  {cat:'pro',q:'"Elle ______ levée à 7h." Quelle est la forme correcte?',opts:['s\'est','a','est','m\'est'],a:0},
+  {cat:'pro',q:'Mettre à la forme négative: "Il se lève."',opts:['Il ne se lève pas.','Il se ne lève pas.','Il ne lève pas se.','Il pas se lève.'],a:0},
+  {cat:'pro',q:'Quelle est la forme réciproque correcte?',opts:['Ils se voient souvent.','Ils voient se souvent.','Ils se s\'voient.','Ils se vois souvent.'],a:0},
+];
+
+let quizBuilt=false,curQ=0,score=0,qList=[],qCat='all';
+function buildQuiz(){quizBuilt=true;}
+function startQuiz(cat){
+  qCat=cat;
+  document.querySelectorAll('.quiz-cats button').forEach(b=>b.classList.remove('active'));
+  const cats=['all','conj','impa','neg','cond','pro'];
+  document.querySelectorAll('.quiz-cats button')[cats.indexOf(cat)].classList.add('active');
+  qList=cat==='all'?[...quizData]:quizData.filter(q=>q.cat===cat);
+  shuffle(qList);curQ=0;score=0;
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
+function renderQ(){
+  const qarea=document.getElementById('qarea');
+  document.getElementById('qprogress').style.width=(qList.length?((curQ/qList.length)*100)+'%':'0');
+  if(curQ>=qList.length){
+    qarea.innerHTML=`<div class="score-box"><div class="big">${score}/${qList.length}</div><p style="margin-top:8px;font-size:1rem;">${score===qList.length?'🏆 Parfait!':score>=qList.length*.7?'👍 Très bien!':'📚 Übung macht den Meister!'}</p><button class="btn-restart" style="margin-top:14px;padding:9px 22px;border-radius:8px;border:none;cursor:pointer;font-weight:700;" onclick="startQuiz('${qCat}')">🔄 Nochmal</button></div>`;
+    document.getElementById('qprogress').style.width='100%';
+    return;
+  }
+  const q=qList[curQ];
+  qarea.innerHTML=`<div class="qcard"><div class="qnum">Frage ${curQ+1} von ${qList.length}</div><div class="qtext">${q.q}</div><div class="qopts">${q.opts.map((o,i)=>`<button onclick="answerQ(${i})">${o}</button>`).join('')}</div><div class="qfb" id="qfb"></div><div class="qnav"><button class="btn-next" id="qnextBtn" style="display:none" onclick="nextQ()">Weiter →</button></div></div>`;
+}
+function answerQ(i){
+  const q=qList[curQ];
+  document.querySelectorAll('.qopts button').forEach(b=>b.disabled=true);
+  const btns=document.querySelectorAll('.qopts button');
+  btns[q.a].classList.add('correct');
+  if(i===q.a){score++;document.getElementById('qfb').textContent='✅ Richtig!';}
+  else{btns[i].classList.add('wrong');document.getElementById('qfb').textContent='❌ Falsch. Richtig wäre: '+q.opts[q.a];}
+  document.getElementById('qnextBtn').style.display='inline-block';
+}
+function nextQ(){curQ++;renderQ();}
+
+// ===== PRONOUNS EXERCISES =====
+let proBuilt=false;
+const proExData=[
+  {q:'Conjugue <b>se laver</b> – Tu ______.',a:'te laves',hint:'te + laves'},
+  {q:'Conjugue <b>s\'habiller</b> – Vous ______.',a:'vous habillez',hint:'vous vous habillez'},
+  {q:'Conjugue <b>se dépêcher</b> – Ils ______.',a:'se dépêchent',hint:'se + dépêchent'},
+  {q:'Passé composé: <b>se promener</b> – Nous ______ ______ ______.',a:'nous sommes promenés',hint:'être + promenés'},
+  {q:'Mettre à la négatif: <i>Tu te brosses les dents.</i>',a:'Tu ne te brosses pas les dents.',hint:'ne vor te, pas après verb'},
+  {q:'Réciproque: <i>Nous ______ (se téléphoner) tous les soirs.</i>',a:'nous téléphonons',hint:'nous nous téléphonons'},
+];
+function buildProEx(){
+  proBuilt=true;
+  const area=document.getElementById('pro_ex_area');
+  proExData.forEach((item,i)=>{
+    const div=document.createElement('div');div.className='ex-item';
+    div.innerHTML=`<p>${i+1}. ${item.q}<br><input class="gap" type="text" placeholder="..." data-ans="${item.a}" id="pro_g${i}"></p>
+    <div class="ex-btns">
+      <button class="btn-check" onclick="checkOne('pro_g${i}')">✔ Prüfen</button>
+      <button class="btn-sol" onclick="showOneSol('pro_sol_${i}','${item.a}','${item.hint}')">💡 Lösung</button>
+      <button class="btn-reset" onclick="resetOne('pro_g${i}','pro_sol_${i}')">↺ Reset</button>
+    </div>
+    <div class="sol-area" id="pro_sol_${i}"></div>`;
+    area.appendChild(div);
+  });
+}
+
+// ===== WORD COUNT =====
+function countWords(){
+  const txt=document.getElementById('myComm').value.trim();
+  const wc=txt?txt.split(/\s+/).length:0;
+  const el=document.getElementById('wcDisplay');
+  el.textContent='Wörter: '+wc+' / 80';
+  el.style.color=wc>=80?'#28a745':'#888';
+}
+</script>
+</body>
+</html>
